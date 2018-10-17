@@ -1,0 +1,31 @@
+1.  SELECT student_id, course_code,grade 
+    FROM `student_course_info` 
+    WHERE student_id = 17
+
+2.SELECT students.student_id,students.first_name, students.last_name,
+COUNT(student_course_info.course_code) AS courses_taken,
+IF(AVG(grade)>90,'4.0',IF(AVG(grade)>80,'3.0',IF(AVG(grade)>70,'2.0','1.0'))) AS GPA
+FROM students 
+JOIN student_course_info on students.student_id = student_course_info.student_id
+WHERE students.student_status = 'GRADUATED'
+GROUP BY student_course_info.student_id
+
+3. SELECT faculty_id, course_code, 
+COUNT(course_code) 
+AS number_of_times_taught 
+FROM `courses` 
+WHERE faculty_id = 2 
+GROUP BY course_code  
+ORDER BY number_of_times_taught DESC 
+
+4. SELECT students.first_name, students.last_name,
+IF(AVG(grade)>90,'4.0',IF(AVG(grade)>80,'3.0',IF(AVG(grade)>70,'2.0','1.0'))) AS GPA
+FROM students 
+JOIN student_course_info on students.student_id = student_course_info.student_id 
+GROUP BY student_course_info.student_id  
+ORDER BY GPA DESC
+
+7.SELECT courses.course_code, courses.name,courses.description, courses.faculty_id 
+FROM `courses`, `students`
+WHERE students.student_status = 'enrolled'
+GROUP BY course_code 
